@@ -1,0 +1,16 @@
+#formulaire {
+	
+	border:solid black 2px;
+	width:600px;
+	position:relative;
+	left:30%;
+	margin:0;
+	padding:10px;
+	height:300px;
+}
+
+input {
+	position:absolute;
+	left:110px;
+	margin:0;
+}

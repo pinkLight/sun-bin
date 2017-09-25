@@ -1,0 +1,44 @@
+<template id="template">
+    <style>
+        a {
+            color: #B45F04;
+            font-variant: small-caps;
+            font-size:30px;
+        }
+    </style>
+    <a href="link" ><span id="name"></span></a>
+</template>
+<script>
+    var linkDoc = document.currentScript.ownerDocument; // Ici, la variable document correspond au document de index.html. Avec helloDoc, on s'assure de bien accéder le document de hello-world.html
+  var homeLink = document.registerElement('home-link', {
+    prototype: Object.create(HTMLElement.prototype, {
+        name: {                
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+      createdCallback: { // exécuté à chaque création d'un élément <homeLink>
+        value: function() {
+          var root = this.createShadowRoot();
+          var template = linkDoc.querySelector('#template'); // on cherche #template directement dans le DOM de homeLink.html
+          var clone = document.importNode(template.content, true);
+          var link = this.getAttribute("link");
+
+          if(link != null && this.link != link){
+            this.link = link;
+          }
+          var name = this.getAttribute("name");
+
+          if(name != null && this.name != name){
+            this.name = name;
+          }
+
+         
+          clone.querySelector('#name').innerText = this.name;
+          clone.querySelector("a").href=this.link;
+          root.appendChild(clone);
+        }
+      }
+    })
+  });
+</script>

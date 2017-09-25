@@ -1,0 +1,39 @@
+<template id="template_siteTitle">
+    <style>
+         h1 {
+             color: #B45F04;
+             background-color:black;
+             text-align:center;
+        }
+    </style>
+    <h1 id="title"></h1>
+</template>
+<script>
+    var siteTitleDoc = document.currentScript.ownerDocument; // Ici, la variable document correspond au document de index.html. Avec helloDoc, on s'assure de bien accéder le document de hello-world.html
+  var siteTitle = document.registerElement('site-title', {
+    prototype: Object.create(HTMLElement.prototype, {
+        siteTitle: {                 // optionnel si on n'a pas besoin de valeur par défaut
+             // valeur par défaut de l'attribut name
+            writable: true,
+            enumerable: true,
+            configurable: true
+          },
+      createdCallback: { // exécuté à chaque création 
+        value: function() {
+          var root = this.createShadowRoot();
+          var template = siteTitleDoc.querySelector('#template_siteTitle'); // on cherche #template directement dans le DOM de hello-world.html
+          var clone = document.importNode(template.content, true);
+          var title = this.getAttribute("title");
+
+          if(title != null && this.title != title){
+            this.title = title;
+          }
+
+          clone.querySelector("h1").innerText = this.title;
+
+          root.appendChild(clone);
+        }
+      }
+    })
+  });
+</script>
